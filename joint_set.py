@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 import numpy as np
 from matplotlib import pyplot as plt
 
@@ -32,12 +34,15 @@ class JointSet(object):
         if all_parents[index] < 0:
             return -1
 
-        #print("Resolving parent for ", constants.JOINTS_NAME[index])
-        while(all_parents[index] not in joints_choice):
-            #print("Checking ", constants.JOINTS_NAME[all_parents[index]])
-            index = all_parents[index]
+        parent = all_parents[index]
 
-        return all_parents[index]
+        #print("Resolving parent for ", constants.JOINTS_NAME[index])
+        while(parent not in joints_choice):
+            #print("Checking ", constants.JOINTS_NAME[all_parents[parent]])
+            parent = all_parents[parent]
+
+        #print(parent)
+        return parent
 
     def build(self, joints_choice=list(range(34))):
         """
@@ -74,7 +79,7 @@ class JointSet(object):
         joints_to_select = self._joints.copy()
         joints_left = [self._joints.index(i) for i in self._joints_left]
         joints_right = [self._joints.index(i) for i in self._joints_right]
-        joints_parents = [self._joints.index(i) if i > 0 else -1 for i in self._parents]
+        joints_parents = [self._joints.index(i) if i >= 0 else -1 for i in self._parents]
         joint_names = [constants.JOINTS_NAME[i] for i in joints_to_select]
 
         return {

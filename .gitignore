@@ -1,2 +1,6 @@
 *.json
 *.pyc
+*.npz
+*.pkl
+*.h5
+*.pyc
